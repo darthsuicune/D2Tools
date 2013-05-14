@@ -1,10 +1,13 @@
-package com.suicune.d2tools;
+package com.suicune.d2tools.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+
+import com.suicune.d2tools.R;
+import com.suicune.d2tools.fragments.CharacterDetailFragment;
 
 /**
  * An activity representing a single Character detail screen. This activity is

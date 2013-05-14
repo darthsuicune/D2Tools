@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/character_list"
-        android:name="com.suicune.d2tools.CharacterListFragment"
+        android:name="com.suicune.d2tools.fragments.CharacterListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

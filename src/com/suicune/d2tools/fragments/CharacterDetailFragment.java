@@ -1,4 +1,4 @@
-package com.suicune.d2tools;
+package com.suicune.d2tools.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.suicune.d2tools.dummy.DummyContent;
+import com.suicune.d2tools.R;
+import com.suicune.d2tools.activities.CharacterDetailActivity;
+import com.suicune.d2tools.activities.CharacterListActivity;
 
 /**
  * A fragment representing a single Character detail screen. This fragment is
@@ -22,9 +24,9 @@ public class CharacterDetailFragment extends Fragment {
 	public static final String ARG_ITEM_ID = "item_id";
 
 	/**
-	 * The dummy content this fragment is presenting.
+	 * The character this fragment is presenting.
 	 */
-	private DummyContent.DummyItem mItem;
+	private Character mItem;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -38,11 +40,11 @@ public class CharacterDetailFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		if (getArguments().containsKey(ARG_ITEM_ID)) {
-			// Load the dummy content specified by the fragment
+			// Load the character specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = DummyContent.ITEM_MAP.get(getArguments().getString(
-					ARG_ITEM_ID));
+			// TODO: Add actual item
+			mItem = getCharacter(getArguments().getLong(ARG_ITEM_ID));
 		}
 	}
 
@@ -51,13 +53,17 @@ public class CharacterDetailFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_character_detail,
 				container, false);
-
-		// Show the dummy content as text in a TextView.
+		
+		// TODO: add information
 		if (mItem != null) {
 			((TextView) rootView.findViewById(R.id.character_detail))
-					.setText(mItem.content);
+					.setText(mItem);
 		}
 
 		return rootView;
+	}
+
+	public Character getCharacter(long id) {
+		return null;
 	}
 }

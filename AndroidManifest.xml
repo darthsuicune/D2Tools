@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.suicune.d2tools.CharacterListActivity"
+            android:name="com.suicune.d2tools.activities.CharacterListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,9 +23,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.suicune.d2tools.CharacterDetailActivity"
+            android:name="com.suicune.d2tools.activities.CharacterDetailActivity"
             android:label="@string/title_character_detail"
-            android:parentActivityName=".CharacterListActivity" >
+            android:parentActivityName="com.suicune.d2tools.activities.CharacterListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CharacterListActivity" />

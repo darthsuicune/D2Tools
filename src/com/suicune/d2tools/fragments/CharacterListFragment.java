@@ -1,13 +1,12 @@
-package com.suicune.d2tools;
+package com.suicune.d2tools.fragments;
+
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.suicune.d2tools.dummy.DummyContent;
 
 /**
  * A list fragment representing a list of Characters. This fragment also
@@ -19,6 +18,7 @@ import com.suicune.d2tools.dummy.DummyContent;
  * interface.
  */
 public class CharacterListFragment extends ListFragment {
+	ArrayList<Character> mCharacterList;
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -30,7 +30,7 @@ public class CharacterListFragment extends ListFragment {
 	 * The fragment's current callback object, which is notified of list item
 	 * clicks.
 	 */
-	private Callbacks mCallbacks = sDummyCallbacks;
+	private Callbacks mCallbacks = sCharacterCallbacks;
 
 	/**
 	 * The current activated item position. Only used on tablets.
@@ -46,16 +46,16 @@ public class CharacterListFragment extends ListFragment {
 		/**
 		 * Callback for when an item has been selected.
 		 */
-		public void onItemSelected(String id);
+		public void onItemSelected(long id);
 	}
 
 	/**
 	 * A dummy implementation of the {@link Callbacks} interface that does
 	 * nothing. Used only when this fragment is not attached to an activity.
 	 */
-	private static Callbacks sDummyCallbacks = new Callbacks() {
+	private static Callbacks sCharacterCallbacks = new Callbacks() {
 		@Override
-		public void onItemSelected(String id) {
+		public void onItemSelected(long id) {
 		}
 	};
 
@@ -71,9 +71,9 @@ public class CharacterListFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 
 		// TODO: replace with a real list adapter.
-		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, DummyContent.ITEMS));
+//		setListAdapter(new ArrayAdapter<Character>(getActivity(),
+//				android.R.layout.simple_list_item_activated_1,
+//				android.R.id.text1, DummyContent.ITEMS));
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class CharacterListFragment extends ListFragment {
 		super.onDetach();
 
 		// Reset the active callbacks interface to the dummy implementation.
-		mCallbacks = sDummyCallbacks;
+		mCallbacks = sCharacterCallbacks;
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class CharacterListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		mCallbacks.onItemSelected(id);
 	}
 
 	@Override

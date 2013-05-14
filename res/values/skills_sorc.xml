@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sorc_skills_ice">
+        <item>@string/sorc_skills_ice_bolt</item>
+        <item>@string/sorc_skills_ice_blast</item>
+        <item>@string/sorc_skills_ice_glacial_spike</item>
+        <item>@string/sorc_skills_ice_frozen_armor</item>
+        <item>@string/sorc_skills_ice_shiver_armor</item>
+        <item>@string/sorc_skills_ice_chilling_armor</item>
+        <item>@string/sorc_skills_ice_frost_nova</item>
+        <item>@string/sorc_skills_ice_blizzard</item>
+        <item>@string/sorc_skills_ice_frozen_orb</item>
+        <item>@string/sorc_skills_ice_cold_mastery</item>
+    </string-array>
+    <string-array name="sorc_skills_lightning">
+        <item>@string/sorc_skills_lightning_charged_bolt</item>
+        <item>@string/sorc_skills_lightning_static_field</item>
+        <item>@string/sorc_skills_lightning_telekinesis</item>
+        <item>@string/sorc_skills_lightning_nova</item>
+        <item>@string/sorc_skills_lightning_lightning</item>
+        <item>@string/sorc_skills_lightning_chain_lightning</item>
+        <item>@string/sorc_skills_lightning_teleport</item>
+        <item>@string/sorc_skills_lightning_thunder_storm</item>
+        <item>@string/sorc_skills_lightning_energy_shield</item>
+        <item>@string/sorc_skills_lightning_lightning_mastery</item>
+    </string-array>
+    <string-array name="sorc_skills_fire">
+        <item>@string/sorc_skills_fire_bolt</item>
+        <item>@string/sorc_skills_fire_ball</item>
+        <item>@string/sorc_skills_fire_inferno</item>
+        <item>@string/sorc_skills_fire_warmth</item>
+        <item>@string/sorc_skills_fire_blaze</item>
+        <item>@string/sorc_skills_fire_wall</item>
+        <item>@string/sorc_skills_fire_enchant</item>
+        <item>@string/sorc_skills_fire_meteor</item>
+        <item>@string/sorc_skills_fire_mastery</item>
+        <item>@string/sorc_skills_fire_hydra</item>
+    </string-array>
+
+    <string name="sorc_skills_ice_bolt">Ice Bolt</string>
+    <string name="sorc_skills_ice_blast">Ice Blast</string>
+    <string name="sorc_skills_ice_glacial_spike">Glacial Spike</string>
+    <string name="sorc_skills_ice_frozen_armor">Frozen Armor</string>
+    <string name="sorc_skills_ice_shiver_armor">Shiver Armor</string>
+    <string name="sorc_skills_ice_chilling_armor">Chilling Armor</string>
+    <string name="sorc_skills_ice_frost_nova">Frost Nova</string>
+    <string name="sorc_skills_ice_blizzard">Blizzard</string>
+    <string name="sorc_skills_ice_frozen_orb">Frozen Orb</string>
+    <string name="sorc_skills_ice_cold_mastery">Cold Mastery</string>
+    
+    <string name="sorc_skills_lightning_charged_bolt">Charged Bolt</string>
+    <string name="sorc_skills_lightning_static_field">Static Field</string>
+    <string name="sorc_skills_lightning_telekinesis">Telekinesis</string>
+    <string name="sorc_skills_lightning_nova">Nova</string>
+    <string name="sorc_skills_lightning_lightning">Lightning</string>
+    <string name="sorc_skills_lightning_chain_lightning">Chain Lightning</string>
+    <string name="sorc_skills_lightning_teleport">Teleport</string>
+    <string name="sorc_skills_lightning_thunder_storm">Thunder Storm</string>
+    <string name="sorc_skills_lightning_energy_shield">Energy Shield</string>
+    <string name="sorc_skills_lightning_lightning_mastery">Lightning Mastery</string>
+    
+    <string name="sorc_skills_fire_bolt">Fire Bolt</string>
+    <string name="sorc_skills_fire_ball">Fire Ball</string>
+    <string name="sorc_skills_fire_inferno">Inferno</string>
+    <string name="sorc_skills_fire_warmth">Warmth</string>
+    <string name="sorc_skills_fire_blaze">Blaze</string>
+    <string name="sorc_skills_fire_wall">Fire Wall</string>
+    <string name="sorc_skills_fire_enchant">Enchant</string>
+    <string name="sorc_skills_fire_meteor">Meteor</string>
+    <string name="sorc_skills_fire_mastery">Fire Mastery</string>
+    <string name="sorc_skills_fire_hydra">Hydra</string>
+
+</resources>

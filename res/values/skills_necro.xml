@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="skills_necro_summon">
+        <item>@string/skills_necro_summon_skeleton</item>
+        <item>@string/skills_necro_summon_skeleton_mage</item>
+        <item>@string/skills_necro_summon_skeleton_mastery</item>
+        <item>@string/skills_necro_summon_sand_golem</item>
+        <item>@string/skills_necro_summon_fire_golem</item>
+        <item>@string/skills_necro_summon_blood_golem</item>
+        <item>@string/skills_necro_summon_iron_golem</item>
+        <item>@string/skills_necro_summon_golem_mastery</item>
+        <item>@string/skills_necro_summon_resist</item>
+        <item>@string/skills_necro_summon_revive</item>
+    </string-array>
+    <string-array name="skills_necro_bone_poison">
+        <item>@string/skills_necro_bone_poison_teeth</item>
+        <item>@string/skills_necro_bone_poison_bone_spear</item>
+        <item>@string/skills_necro_bone_poison_bone_spirit</item>
+        <item>@string/skills_necro_bone_poison_dagger</item>
+        <item>@string/skills_necro_bone_poison_nova</item>
+        <item>@string/skills_necro_bone_poison_explosion</item>
+        <item>@string/skills_necro_bone_poison_corpse_explosion</item>
+        <item>@string/skills_necro_bone_poison_bone_armor</item>
+        <item>@string/skills_necro_bone_poison_bone_wall</item>
+        <item>@string/skills_necro_bone_poison_bone_prison</item>
+    </string-array>
+    <string-array name="skills_necro_curse">
+        <item>@string/skills_necro_curse_amplify_damage</item>
+        <item>@string/skills_necro_curse_iron_maiden</item>
+        <item>@string/skills_necro_curse_life_tap</item>
+        <item>@string/skills_necro_curse_lower_resist</item>
+        <item>@string/skills_necro_curse_terror</item>
+        <item>@string/skills_necro_curse_dim_vision</item>
+        <item>@string/skills_necro_curse_attract</item>
+        <item>@string/skills_necro_curse_weaken</item>
+        <item>@string/skills_necro_curse_confuse</item>
+        <item>@string/skills_necro_curse_decrepify</item>
+    </string-array>
+
+    <string name="skills_necro_summon_skeleton">Summon skeleton</string>
+    <string name="skills_necro_summon_skeleton_mage">Summon skeleton mage</string>
+    <string name="skills_necro_summon_skeleton_mastery">Skeleton Mastery</string>
+    <string name="skills_necro_summon_sand_golem">Sand Golem</string>
+    <string name="skills_necro_summon_fire_golem">Fire Golem</string>
+    <string name="skills_necro_summon_blood_golem">Blood Golem</string>
+    <string name="skills_necro_summon_iron_golem">Iron Golem</string>
+    <string name="skills_necro_summon_golem_mastery">Golem Mastery</string>
+    <string name="skills_necro_summon_resist">Summon Resist</string>
+    <string name="skills_necro_summon_revive">Revive</string>
+    <string name="skills_necro_bone_poison_teeth">Teeth</string>
+    <string name="skills_necro_bone_poison_bone_spear">Bone Spear</string>
+    <string name="skills_necro_bone_poison_bone_spirit">Bone Spirit</string>
+    <string name="skills_necro_bone_poison_dagger">Poison Dagger</string>
+    <string name="skills_necro_bone_poison_nova">Poison Nova</string>
+    <string name="skills_necro_bone_poison_explosion">Poison Explosion</string>
+    <string name="skills_necro_bone_poison_corpse_explosion">Corpse Explosion</string>
+    <string name="skills_necro_bone_poison_bone_armor">Bone Armor</string>
+    <string name="skills_necro_bone_poison_bone_wall">Bone Wall</string>
+    <string name="skills_necro_bone_poison_bone_prison">Bone Prison</string>
+    <string name="skills_necro_curse_amplify_damage">Amplify Damage</string>
+    <string name="skills_necro_curse_iron_maiden">Iron Maiden</string>
+    <string name="skills_necro_curse_life_tap">Life Tap</string>
+    <string name="skills_necro_curse_lower_resist">Lower Resist</string>
+    <string name="skills_necro_curse_terror">Terror</string>
+    <string name="skills_necro_curse_dim_vision">Dim Vision</string>
+    <string name="skills_necro_curse_attract">Attract</string>
+    <string name="skills_necro_curse_weaken">Weaken</string>
+    <string name="skills_necro_curse_confuse">Confuse</string>
+    <string name="skills_necro_curse_decrepify">Decrepify</string>
+
+</resources>
