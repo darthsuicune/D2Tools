@@ -177,23 +177,13 @@ public class D2Character {
 	}
 
 	public void addSkill(String name, int level) {
-		int actualValue = 0;
-		for (int i = 0; i < mSkillList.size(); i++) {
-			if (isInSkillList(name)) {
-				actualValue = mSkillList.get(i).mLevel;
-			}
-		}
-		D2Skill item = new D2Skill(name, actualValue);
-		mSkillList.add(item);
-	}
-
-	private boolean isInSkillList(String name) {
 		for (int i = 0; i < mSkillList.size(); i++) {
 			if (mSkillList.get(i).mName.equals(name)) {
-				return true;
+				mSkillList.get(i).mLevel = level;
+				return;
 			}
 		}
-		return false;
+		mSkillList.add(new D2Skill(name, level));
 	}
 
 	public void save(Context context) {

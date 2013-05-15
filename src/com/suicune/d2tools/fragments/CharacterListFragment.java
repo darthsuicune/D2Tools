@@ -2,8 +2,11 @@ package com.suicune.d2tools.fragments;
 
 import java.util.ArrayList;
 
+import com.suicune.d2tools.database.D2Contract;
+
 import android.app.Activity;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -171,20 +174,31 @@ public class CharacterListFragment extends ListFragment implements
 		mActivatedPosition = position;
 	}
 
+	private void loadCharacters(Cursor cursor) {
+		// TODO Auto-generated method stub
+
+	}
+
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		// TODO Auto-generated method stub
-		return null;
+		switch (id) {
+		case LOADER_CHARACTERS:
+			return new CursorLoader(getActivity(),
+					D2Contract.Characters.CONTENT_URI, null, null, null, null);
+		default:
+			return null;
+		}
 	}
 
 	@Override
-	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
-		// TODO Auto-generated method stub
-
+	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+		if (cursor != null && cursor.getCount() > 0) {
+			loadCharacters(cursor);
+		}
 	}
 
 	@Override
-	public void onLoaderReset(Loader<Cursor> arg0) {
+	public void onLoaderReset(Loader<Cursor> loader) {
 		// TODO Auto-generated method stub
 
 	}
