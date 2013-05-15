@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_details_save"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/menu_details_save"
+        android:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_details_delete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/menu_details_delete"
+        android:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_details_copy_from"
+        android:icon="@android:drawable/ic_menu_upload"
+        android:title="@string/menu_details_copy_from"
+        android:showAsAction="ifRoom"/>
+
+</menu>

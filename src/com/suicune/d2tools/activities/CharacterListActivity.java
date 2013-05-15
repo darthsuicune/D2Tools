@@ -50,6 +50,8 @@ public class CharacterListActivity extends FragmentActivity implements
 			((CharacterListFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.character_list))
 					.setActivateOnItemClick(true);
+			getSupportFragmentManager().findFragmentById(R.id.character_list)
+					.setHasOptionsMenu(true);
 		}
 
 		// TODO: If exposing deep links into your app, handle intents here.
@@ -69,6 +71,7 @@ public class CharacterListActivity extends FragmentActivity implements
 			arguments.putLong(CharacterDetailFragment.ARG_ITEM_ID, id);
 			CharacterDetailFragment fragment = new CharacterDetailFragment();
 			fragment.setArguments(arguments);
+			fragment.setHasOptionsMenu(true);
 			getSupportFragmentManager().beginTransaction()
 					.replace(R.id.character_detail_container, fragment)
 					.commit();

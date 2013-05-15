@@ -3,8 +3,14 @@ package com.suicune.d2tools.fragments;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
@@ -17,7 +23,9 @@ import android.widget.ListView;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class CharacterListFragment extends ListFragment {
+public class CharacterListFragment extends ListFragment implements
+		LoaderManager.LoaderCallbacks<Cursor> {
+	public static final int LOADER_CHARACTERS = 1;
 	ArrayList<Character> mCharacterList;
 
 	/**
@@ -70,10 +78,11 @@ public class CharacterListFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// TODO: replace with a real list adapter.
-//		setListAdapter(new ArrayAdapter<Character>(getActivity(),
-//				android.R.layout.simple_list_item_activated_1,
-//				android.R.id.text1, DummyContent.ITEMS));
+		getCharacterList();
+	}
+
+	private void getCharacterList() {
+		getLoaderManager().restartLoader(LOADER_CHARACTERS, null, this);
 	}
 
 	@Override
@@ -128,6 +137,18 @@ public class CharacterListFragment extends ListFragment {
 		}
 	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		return super.onOptionsItemSelected(item);
+	}
+
 	/**
 	 * Turns on activate-on-click mode. When this mode is on, list items will be
 	 * given the 'activated' state when touched.
@@ -148,5 +169,23 @@ public class CharacterListFragment extends ListFragment {
 		}
 
 		mActivatedPosition = position;
+	}
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> arg0) {
+		// TODO Auto-generated method stub
+
 	}
 }

@@ -47,6 +47,7 @@ public class CharacterDetailActivity extends FragmentActivity {
 							CharacterDetailFragment.ARG_ITEM_ID));
 			CharacterDetailFragment fragment = new CharacterDetailFragment();
 			fragment.setArguments(arguments);
+			fragment.setHasOptionsMenu(true);
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.character_detail_container, fragment).commit();
 		}

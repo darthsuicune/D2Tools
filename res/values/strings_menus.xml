@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_details_delete">Delete</string>
+    <string name="menu_details_save">Save</string>
+    <string name="menu_details_copy_from">Copy from another</string>
+    <string name="menu_char_list_add">Create new</string>
+    
+</resources>
