@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="necromancer">Necromancer</string>
+    <string name="amazon">Amazon</string>
+    <string name="assassin">Assassin</string>
+    <string name="sorceress">Sorceress</string>
+    <string name="paladin">Paladin</string>
+    <string name="barbarian">Barbarian</string>
+    <string name="druid">Druid</string>
+</resources>

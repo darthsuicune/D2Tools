@@ -2,20 +2,27 @@ package com.suicune.d2tools.fragments;
 
 import java.util.ArrayList;
 
-import com.suicune.d2tools.database.D2Contract;
-
 import android.app.Activity;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.suicune.d2tools.D2Character;
+import com.suicune.d2tools.R;
+import com.suicune.d2tools.database.D2Contract;
 
 /**
  * A list fragment representing a list of Characters. This fragment also
@@ -29,7 +36,7 @@ import android.widget.ListView;
 public class CharacterListFragment extends ListFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 	public static final int LOADER_CHARACTERS = 1;
-	ArrayList<Character> mCharacterList;
+	ArrayList<D2Character> mCharacterList;
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -142,14 +149,20 @@ public class CharacterListFragment extends ListFragment implements
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// TODO Auto-generated method stub
+		inflater.inflate(R.menu.menu_char_list, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		return super.onOptionsItemSelected(item);
+		switch(item.getItemId()){
+		case R.id.menu_char_list_add:
+			createNewChar();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		
 	}
 
 	/**
@@ -173,10 +186,50 @@ public class CharacterListFragment extends ListFragment implements
 
 		mActivatedPosition = position;
 	}
+	
+	private void createNewChar(){
+		
+	}
 
 	private void loadCharacters(Cursor cursor) {
-		// TODO Auto-generated method stub
+		// TODO
+		if (mCharacterList == null) {
+			mCharacterList = new ArrayList<D2Character>();
+		} else {
+			mCharacterList.clear();
+		}
+		if (cursor.moveToFirst()) {
+			do {
+				try {
+					int id = Integer.parseInt(cursor.getString(cursor
+							.getColumnIndex(D2Contract.Characters._ID)));
+					String name = cursor.getString(cursor
+							.getColumnIndex(D2Contract.Characters.NAME));
+					int level = Integer.parseInt(cursor.getString(cursor
+							.getColumnIndex(D2Contract.Characters.LEVEL)));
+					int charClass = Integer.parseInt(cursor.getString(cursor
+							.getColumnIndex(D2Contract.Characters.CLASS)));
+					int[] stats = new int[4];
+					stats[D2Character.INDEX_STR] = Integer
+							.parseInt(cursor.getString(cursor
+									.getColumnIndex(D2Contract.Characters.STR)));
+					stats[D2Character.INDEX_DEX] = Integer
+							.parseInt(cursor.getString(cursor
+									.getColumnIndex(D2Contract.Characters.DEX)));
+					stats[D2Character.INDEX_VIT] = Integer
+							.parseInt(cursor.getString(cursor
+									.getColumnIndex(D2Contract.Characters.VIT)));
+					stats[D2Character.INDEX_ENE] = Integer
+							.parseInt(cursor.getString(cursor
+									.getColumnIndex(D2Contract.Characters.ENE)));
 
+					D2Character.createChar(id, name, level, charClass, stats);
+				} catch (NumberFormatException e) {
+					cursor.close();
+					return;
+				}
+			} while (cursor.moveToNext());
+		}
 	}
 
 	@Override
@@ -199,7 +252,34 @@ public class CharacterListFragment extends ListFragment implements
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
-		// TODO Auto-generated method stub
+	}
 
+	public class CharacterAdapter extends ArrayAdapter<D2Character> {
+		public CharacterAdapter(Context context, int resource,
+				int textViewResourceId) {
+			super(context, resource, textViewResourceId);
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View v = convertView;
+			if (convertView == null) {
+				v = LayoutInflater.from(getContext()).inflate(
+						R.layout.character_list_item, parent);
+			}
+
+			TextView name = (TextView) v
+					.findViewById(R.id.character_list_item_name);
+			TextView charClass = (TextView) v
+					.findViewById(R.id.character_list_item_class);
+			TextView level = (TextView) v
+					.findViewById(R.id.character_list_item_level);
+
+			name.setText(mCharacterList.get(position).mName);
+			charClass.setText(mCharacterList.get(position).mClass);
+			level.setText(mCharacterList.get(position).mLevel);
+
+			return v;
+		}
 	}
 }
