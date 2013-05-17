@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/character_detail"
     android:layout_width="match_parent"
@@ -6,4 +6,4 @@
     android:padding="16dp"
     tools:context=".CharacterDetailFragment" >
 
-</LinearLayout>
+</FrameLayout>

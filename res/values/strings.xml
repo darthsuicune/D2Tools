@@ -4,5 +4,6 @@
     <string name="app_name">D2Tools</string>
     <string name="title_character_detail">Character Detail</string>
     <string name="illegal_uri">ILLEGAL URI!!!</string>
+    <string name="character_list_char_icon">Character icon</string>
 
 </resources>
