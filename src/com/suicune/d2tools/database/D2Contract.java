@@ -1,5 +1,7 @@
 package com.suicune.d2tools.database;
 
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -16,7 +18,7 @@ public final class D2Contract {
 		public static final String VIT = "vit";
 		public static final String ENE = "ene";
 
-		public static final Uri CONTENT_URI = Uri.parse(D2Provider.AUTHORITY
+		public static final Uri CONTENT_URI = Uri.parse(ContentResolver.SCHEME_CONTENT + "://" + D2Provider.AUTHORITY + "/"
 				+ TABLE_NAME);
 	}
 
@@ -27,7 +29,7 @@ public final class D2Contract {
 		public static final String SKILL_NAME = "skillname";
 		public static final String SKILL_LEVEL = "skilllevel";
 
-		public static final Uri CONTENT_URI = Uri.parse(D2Provider.AUTHORITY
+		public static final Uri CONTENT_URI = Uri.parse(ContentResolver.SCHEME_CONTENT + "://" + D2Provider.AUTHORITY + "/"
 				+ TABLE_NAME);
 	}
 }

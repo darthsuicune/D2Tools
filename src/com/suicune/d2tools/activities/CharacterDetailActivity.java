@@ -43,8 +43,8 @@ public class CharacterDetailActivity extends FragmentActivity {
 			Bundle arguments = new Bundle();
 			arguments.putString(
 					CharacterDetailFragment.ARG_ITEM_ID,
-					getIntent().getStringExtra(
-							CharacterDetailFragment.ARG_ITEM_ID));
+					        Long.toString(getIntent().getLongExtra(
+							CharacterDetailFragment.ARG_ITEM_ID, -1)));
 			CharacterDetailFragment fragment = new CharacterDetailFragment();
 			fragment.setArguments(arguments);
 			fragment.setHasOptionsMenu(true);

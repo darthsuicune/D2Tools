@@ -7,6 +7,8 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.*;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.suicune.d2tools.D2Character;
 import com.suicune.d2tools.R;
 import com.suicune.d2tools.activities.CharacterDetailActivity;
@@ -28,6 +30,10 @@ public class CharacterDetailFragment extends Fragment implements
 
     private static final int LOADER_CHARACTER = 1;
     private static final int LOADER_SKILLS = 2;
+
+    TextView mNameView;
+    TextView mClassView;
+    TextView mLevelView;
 
     /**
      * The character this fragment is presenting.
@@ -57,6 +63,10 @@ public class CharacterDetailFragment extends Fragment implements
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_character_detail,
                 container, false);
+
+        mNameView = (TextView) rootView.findViewById(R.id.char_detail_name);
+        mClassView = (TextView) rootView.findViewById(R.id.char_detail_class);
+        mLevelView = (TextView) rootView.findViewById(R.id.char_detail_level);
 
         if (mItem != null) {
             showCharacterInfo();
@@ -126,6 +136,11 @@ public class CharacterDetailFragment extends Fragment implements
     }
 
     private void showCharacterInfo() {
+        if(mItem != null){
+            mNameView.setText(mItem.mName);
+            mClassView.setText(mItem.mClass);
+            mLevelView.setText("" + mItem.mLevel);
+        }
         // TODO Auto-generated method stub
     }
 
@@ -138,17 +153,18 @@ public class CharacterDetailFragment extends Fragment implements
     }
 
     private void createNewChar() {
-        // TODO Auto-generated method stub
+        Toast.makeText(getActivity(), "NORL", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (!args.containsKey(ARG_ITEM_ID)) {
+            createNewChar();
             return null;
         }
 
         String selection;
-        String[] selectionArgs = {Long.toString(args.getLong(ARG_ITEM_ID))};
+        String[] selectionArgs = { args.getString(ARG_ITEM_ID) };
 
         switch (id) {
             case LOADER_CHARACTER:

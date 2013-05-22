@@ -30,6 +30,13 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".CharacterListActivity"/>
         </activity>
+        <provider
+                android:authorities="com.suicune.d2tools.database.D2Provider"
+                android:enabled="true"
+                android:exported="false"
+                android:name="com.suicune.d2tools.database.D2Provider" >
+
+        </provider>
     </application>
 
 </manifest>

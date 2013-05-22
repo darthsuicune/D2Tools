@@ -1,6 +1,7 @@
 package com.suicune.d2tools.fragments;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,7 +10,10 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.*;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import com.suicune.d2tools.D2Character;
 import com.suicune.d2tools.R;
 import com.suicune.d2tools.database.D2Contract;
@@ -165,7 +169,7 @@ public class CharacterListFragment extends ListFragment implements
     }
 
     private void createNewChar() {
-        Toast.makeText(getActivity(), "TEST", Toast.LENGTH_LONG).show();
+        D2Character.createChar("Muaziz", 80, R.string.sorceress).save(getActivity());
     }
 
     private void loadCharacters(Cursor cursor) {
@@ -199,14 +203,11 @@ public class CharacterListFragment extends ListFragment implements
                             .parseInt(cursor.getString(cursor
                                     .getColumnIndex(D2Contract.Characters.ENE)));
 
-                    D2Character.createChar(id, name, level, charClass, stats);
+                    mCharacterList.add(D2Character.createChar(id, name, level, charClass, stats));
                 } catch (NumberFormatException e) {
-                    cursor.close();
                     return;
                 }
             } while (cursor.moveToNext());
-        } else {
-            Toast.makeText(getActivity(), "NO CHARS", Toast.LENGTH_LONG).show();
         }
         setListAdapter(new CharacterAdapter(getActivity()));
     }
@@ -245,7 +246,7 @@ public class CharacterListFragment extends ListFragment implements
 
     public class CharacterAdapter extends ArrayAdapter<D2Character> {
         public CharacterAdapter(Context context) {
-            super(context, R.layout.character_list_item);
+            super(context, R.layout.character_list_item, R.id.character_list_item_name, mCharacterList);
         }
 
         @Override
@@ -253,7 +254,7 @@ public class CharacterListFragment extends ListFragment implements
             View v = convertView;
             if (convertView == null) {
                 v = LayoutInflater.from(getContext()).inflate(
-                        R.layout.character_list_item, parent);
+                        R.layout.character_list_item, null);
             }
 
             ImageView icon = (ImageView) v.findViewById(R.id.character_list_item_char_icon);
@@ -267,7 +268,7 @@ public class CharacterListFragment extends ListFragment implements
             icon.setImageResource(R.drawable.ic_launcher);
             name.setText(mCharacterList.get(position).mName);
             charClass.setText(mCharacterList.get(position).mClass);
-            level.setText(mCharacterList.get(position).mLevel);
+            level.setText("" + mCharacterList.get(position).mLevel);
 
             return v;
         }
