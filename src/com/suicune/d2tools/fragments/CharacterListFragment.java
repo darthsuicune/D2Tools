@@ -1,7 +1,5 @@
 package com.suicune.d2tools.fragments;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,276 +8,268 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-
+import android.view.*;
+import android.widget.*;
 import com.suicune.d2tools.D2Character;
 import com.suicune.d2tools.R;
 import com.suicune.d2tools.database.D2Contract;
+
+import java.util.ArrayList;
 
 /**
  * A list fragment representing a list of Characters. This fragment also
  * supports tablet devices by allowing list items to be given an 'activated'
  * state upon selection. This helps indicate which item is currently being
  * viewed in a {@link CharacterDetailFragment}.
- * <p>
+ * <p/>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
 public class CharacterListFragment extends ListFragment implements
-		LoaderManager.LoaderCallbacks<Cursor> {
-	public static final int LOADER_CHARACTERS = 1;
-	ArrayList<D2Character> mCharacterList;
+        LoaderManager.LoaderCallbacks<Cursor> {
+    public static final int LOADER_CHARACTERS = 1;
+    /**
+     * The serialization (saved instance state) Bundle key representing the
+     * activated item position. Only used on tablets.
+     */
+    private static final String STATE_ACTIVATED_POSITION = "activated_position";
+    /**
+     * A dummy implementation of the {@link Callbacks} interface that does
+     * nothing. Used only when this fragment is not attached to an activity.
+     */
+    private static Callbacks sCharacterCallbacks = new Callbacks() {
+        @Override
+        public void onItemSelected(long id) {
+        }
+    };
+    ArrayList<D2Character> mCharacterList;
+    /**
+     * The fragment's current callback object, which is notified of list item
+     * clicks.
+     */
+    private Callbacks mCallbacks = sCharacterCallbacks;
+    /**
+     * The current activated item position. Only used on tablets.
+     */
+    private int mActivatedPosition = ListView.INVALID_POSITION;
 
-	/**
-	 * The serialization (saved instance state) Bundle key representing the
-	 * activated item position. Only used on tablets.
-	 */
-	private static final String STATE_ACTIVATED_POSITION = "activated_position";
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public CharacterListFragment() {
+    }
 
-	/**
-	 * The fragment's current callback object, which is notified of list item
-	 * clicks.
-	 */
-	private Callbacks mCallbacks = sCharacterCallbacks;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-	/**
-	 * The current activated item position. Only used on tablets.
-	 */
-	private int mActivatedPosition = ListView.INVALID_POSITION;
+        getCharacterList();
+    }
 
-	/**
-	 * A callback interface that all activities containing this fragment must
-	 * implement. This mechanism allows activities to be notified of item
-	 * selections.
-	 */
-	public interface Callbacks {
-		/**
-		 * Callback for when an item has been selected.
-		 */
-		public void onItemSelected(long id);
-	}
+    private void getCharacterList() {
+        getLoaderManager().restartLoader(LOADER_CHARACTERS, null, this);
+    }
 
-	/**
-	 * A dummy implementation of the {@link Callbacks} interface that does
-	 * nothing. Used only when this fragment is not attached to an activity.
-	 */
-	private static Callbacks sCharacterCallbacks = new Callbacks() {
-		@Override
-		public void onItemSelected(long id) {
-		}
-	};
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-	/**
-	 * Mandatory empty constructor for the fragment manager to instantiate the
-	 * fragment (e.g. upon screen orientation changes).
-	 */
-	public CharacterListFragment() {
-	}
+        // Restore the previously serialized activated item position.
+        if (savedInstanceState != null
+                && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+            setActivatedPosition(savedInstanceState
+                    .getInt(STATE_ACTIVATED_POSITION));
+        }
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
-		getCharacterList();
-	}
+        // Activities containing this fragment must implement its callbacks.
+        if (!(activity instanceof Callbacks)) {
+            throw new IllegalStateException(
+                    "Activity must implement fragment's callbacks.");
+        }
 
-	private void getCharacterList() {
-		getLoaderManager().restartLoader(LOADER_CHARACTERS, null, this);
-	}
+        mCallbacks = (Callbacks) activity;
+    }
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+    @Override
+    public void onDetach() {
+        super.onDetach();
 
-		// Restore the previously serialized activated item position.
-		if (savedInstanceState != null
-				&& savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-			setActivatedPosition(savedInstanceState
-					.getInt(STATE_ACTIVATED_POSITION));
-		}
-	}
+        // Reset the active callbacks interface to the dummy implementation.
+        mCallbacks = sCharacterCallbacks;
+    }
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+    @Override
+    public void onListItemClick(ListView listView, View view, int position,
+                                long id) {
+        super.onListItemClick(listView, view, position, id);
 
-		// Activities containing this fragment must implement its callbacks.
-		if (!(activity instanceof Callbacks)) {
-			throw new IllegalStateException(
-					"Activity must implement fragment's callbacks.");
-		}
+        // Notify the active callbacks interface (the activity, if the
+        // fragment is attached to one) that an item has been selected.
+        mCallbacks.onItemSelected(id);
+    }
 
-		mCallbacks = (Callbacks) activity;
-	}
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mActivatedPosition != ListView.INVALID_POSITION) {
+            // Serialize and persist the activated item position.
+            outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
+        }
+    }
 
-	@Override
-	public void onDetach() {
-		super.onDetach();
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_char_list, menu);
 
-		// Reset the active callbacks interface to the dummy implementation.
-		mCallbacks = sCharacterCallbacks;
-	}
+    }
 
-	@Override
-	public void onListItemClick(ListView listView, View view, int position,
-			long id) {
-		super.onListItemClick(listView, view, position, id);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_char_list_add:
+                createNewChar();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
-		// Notify the active callbacks interface (the activity, if the
-		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(id);
-	}
+    }
 
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		if (mActivatedPosition != ListView.INVALID_POSITION) {
-			// Serialize and persist the activated item position.
-			outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
-		}
-	}
+    /**
+     * Turns on activate-on-click mode. When this mode is on, list items will be
+     * given the 'activated' state when touched.
+     */
+    public void setActivateOnItemClick(boolean activateOnItemClick) {
+        // When setting CHOICE_MODE_SINGLE, ListView will automatically
+        // give items the 'activated' state when touched.
+        getListView().setChoiceMode(
+                activateOnItemClick ? ListView.CHOICE_MODE_SINGLE
+                        : ListView.CHOICE_MODE_NONE);
+    }
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.menu_char_list, menu);
-		super.onCreateOptionsMenu(menu, inflater);
-	}
+    private void setActivatedPosition(int position) {
+        if (position == ListView.INVALID_POSITION) {
+            getListView().setItemChecked(mActivatedPosition, false);
+        } else {
+            getListView().setItemChecked(position, true);
+        }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()){
-		case R.id.menu_char_list_add:
-			createNewChar();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-		
-	}
+        mActivatedPosition = position;
+    }
 
-	/**
-	 * Turns on activate-on-click mode. When this mode is on, list items will be
-	 * given the 'activated' state when touched.
-	 */
-	public void setActivateOnItemClick(boolean activateOnItemClick) {
-		// When setting CHOICE_MODE_SINGLE, ListView will automatically
-		// give items the 'activated' state when touched.
-		getListView().setChoiceMode(
-				activateOnItemClick ? ListView.CHOICE_MODE_SINGLE
-						: ListView.CHOICE_MODE_NONE);
-	}
+    private void createNewChar() {
+        Toast.makeText(getActivity(), "TEST", Toast.LENGTH_LONG).show();
+    }
 
-	private void setActivatedPosition(int position) {
-		if (position == ListView.INVALID_POSITION) {
-			getListView().setItemChecked(mActivatedPosition, false);
-		} else {
-			getListView().setItemChecked(position, true);
-		}
+    private void loadCharacters(Cursor cursor) {
+        if (mCharacterList == null) {
+            mCharacterList = new ArrayList<D2Character>();
+        } else {
+            mCharacterList.clear();
+        }
+        if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst()) {
+            do {
+                try {
+                    int id = Integer.parseInt(cursor.getString(cursor
+                            .getColumnIndex(D2Contract.Characters._ID)));
+                    String name = cursor.getString(cursor
+                            .getColumnIndex(D2Contract.Characters.NAME));
+                    int level = Integer.parseInt(cursor.getString(cursor
+                            .getColumnIndex(D2Contract.Characters.LEVEL)));
+                    int charClass = Integer.parseInt(cursor.getString(cursor
+                            .getColumnIndex(D2Contract.Characters.CLASS)));
+                    int[] stats = new int[4];
+                    stats[D2Character.INDEX_STR] = Integer
+                            .parseInt(cursor.getString(cursor
+                                    .getColumnIndex(D2Contract.Characters.STR)));
+                    stats[D2Character.INDEX_DEX] = Integer
+                            .parseInt(cursor.getString(cursor
+                                    .getColumnIndex(D2Contract.Characters.DEX)));
+                    stats[D2Character.INDEX_VIT] = Integer
+                            .parseInt(cursor.getString(cursor
+                                    .getColumnIndex(D2Contract.Characters.VIT)));
+                    stats[D2Character.INDEX_ENE] = Integer
+                            .parseInt(cursor.getString(cursor
+                                    .getColumnIndex(D2Contract.Characters.ENE)));
 
-		mActivatedPosition = position;
-	}
-	
-	private void createNewChar(){
-		
-	}
+                    D2Character.createChar(id, name, level, charClass, stats);
+                } catch (NumberFormatException e) {
+                    cursor.close();
+                    return;
+                }
+            } while (cursor.moveToNext());
+        } else {
+            Toast.makeText(getActivity(), "NO CHARS", Toast.LENGTH_LONG).show();
+        }
+        setListAdapter(new CharacterAdapter(getActivity()));
+    }
 
-	private void loadCharacters(Cursor cursor) {
-		// TODO
-		if (mCharacterList == null) {
-			mCharacterList = new ArrayList<D2Character>();
-		} else {
-			mCharacterList.clear();
-		}
-		if (cursor.moveToFirst()) {
-			do {
-				try {
-					int id = Integer.parseInt(cursor.getString(cursor
-							.getColumnIndex(D2Contract.Characters._ID)));
-					String name = cursor.getString(cursor
-							.getColumnIndex(D2Contract.Characters.NAME));
-					int level = Integer.parseInt(cursor.getString(cursor
-							.getColumnIndex(D2Contract.Characters.LEVEL)));
-					int charClass = Integer.parseInt(cursor.getString(cursor
-							.getColumnIndex(D2Contract.Characters.CLASS)));
-					int[] stats = new int[4];
-					stats[D2Character.INDEX_STR] = Integer
-							.parseInt(cursor.getString(cursor
-									.getColumnIndex(D2Contract.Characters.STR)));
-					stats[D2Character.INDEX_DEX] = Integer
-							.parseInt(cursor.getString(cursor
-									.getColumnIndex(D2Contract.Characters.DEX)));
-					stats[D2Character.INDEX_VIT] = Integer
-							.parseInt(cursor.getString(cursor
-									.getColumnIndex(D2Contract.Characters.VIT)));
-					stats[D2Character.INDEX_ENE] = Integer
-							.parseInt(cursor.getString(cursor
-									.getColumnIndex(D2Contract.Characters.ENE)));
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        switch (id) {
+            case LOADER_CHARACTERS:
+                return new CursorLoader(getActivity(),
+                        D2Contract.Characters.CONTENT_URI, null, null, null, null);
+            default:
+                return null;
+        }
+    }
 
-					D2Character.createChar(id, name, level, charClass, stats);
-				} catch (NumberFormatException e) {
-					cursor.close();
-					return;
-				}
-			} while (cursor.moveToNext());
-		}
-	}
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        loadCharacters(cursor);
+    }
 
-	@Override
-	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		switch (id) {
-		case LOADER_CHARACTERS:
-			return new CursorLoader(getActivity(),
-					D2Contract.Characters.CONTENT_URI, null, null, null, null);
-		default:
-			return null;
-		}
-	}
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+    }
 
-	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-		if (cursor != null && cursor.getCount() > 0) {
-			loadCharacters(cursor);
-		}
-	}
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callbacks {
+        /**
+         * Callback for when an item has been selected.
+         */
+        public void onItemSelected(long id);
+    }
 
-	@Override
-	public void onLoaderReset(Loader<Cursor> loader) {
-	}
+    public class CharacterAdapter extends ArrayAdapter<D2Character> {
+        public CharacterAdapter(Context context) {
+            super(context, R.layout.character_list_item);
+        }
 
-	public class CharacterAdapter extends ArrayAdapter<D2Character> {
-		public CharacterAdapter(Context context, int resource,
-				int textViewResourceId) {
-			super(context, resource, textViewResourceId);
-		}
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = convertView;
+            if (convertView == null) {
+                v = LayoutInflater.from(getContext()).inflate(
+                        R.layout.character_list_item, parent);
+            }
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = convertView;
-			if (convertView == null) {
-				v = LayoutInflater.from(getContext()).inflate(
-						R.layout.character_list_item, parent);
-			}
+            ImageView icon = (ImageView) v.findViewById(R.id.character_list_item_char_icon);
+            TextView name = (TextView) v
+                    .findViewById(R.id.character_list_item_name);
+            TextView charClass = (TextView) v
+                    .findViewById(R.id.character_list_item_class);
+            TextView level = (TextView) v
+                    .findViewById(R.id.character_list_item_level);
 
-			TextView name = (TextView) v
-					.findViewById(R.id.character_list_item_name);
-			TextView charClass = (TextView) v
-					.findViewById(R.id.character_list_item_class);
-			TextView level = (TextView) v
-					.findViewById(R.id.character_list_item_level);
+            icon.setImageResource(R.drawable.ic_launcher);
+            name.setText(mCharacterList.get(position).mName);
+            charClass.setText(mCharacterList.get(position).mClass);
+            level.setText(mCharacterList.get(position).mLevel);
 
-			name.setText(mCharacterList.get(position).mName);
-			charClass.setText(mCharacterList.get(position).mClass);
-			level.setText(mCharacterList.get(position).mLevel);
-
-			return v;
-		}
-	}
+            return v;
+        }
+    }
 }
