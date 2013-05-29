@@ -1,7 +1,6 @@
 package com.suicune.d2tools.fragments;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -45,6 +44,11 @@ public class CharacterListFragment extends ListFragment implements
         @Override
         public void onItemSelected(long id) {
         }
+
+        @Override
+        public void createNewChar(){
+        }
+
     };
     ArrayList<D2Character> mCharacterList;
     /**
@@ -138,7 +142,7 @@ public class CharacterListFragment extends ListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_char_list_add:
-                createNewChar();
+                mCallbacks.createNewChar();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -166,10 +170,6 @@ public class CharacterListFragment extends ListFragment implements
         }
 
         mActivatedPosition = position;
-    }
-
-    private void createNewChar() {
-        D2Character.createChar("Muaziz", 80, R.string.sorceress).save(getActivity());
     }
 
     private void loadCharacters(Cursor cursor) {
@@ -242,6 +242,8 @@ public class CharacterListFragment extends ListFragment implements
          * Callback for when an item has been selected.
          */
         public void onItemSelected(long id);
+
+        public void createNewChar();
     }
 
     public class CharacterAdapter extends ArrayAdapter<D2Character> {

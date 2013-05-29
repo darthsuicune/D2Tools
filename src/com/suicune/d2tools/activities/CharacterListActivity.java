@@ -82,4 +82,17 @@ public class CharacterListActivity extends FragmentActivity implements
             startActivity(detailIntent);
         }
     }
+
+    @Override
+    public void createNewChar() {
+        if (mTwoPane) {
+            CharacterDetailFragment fragment = new CharacterDetailFragment();
+            fragment.setHasOptionsMenu(true);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.character_detail_container, fragment).commit();
+        } else {
+            Intent detailIntent = new Intent(this, CharacterDetailActivity.class);
+            startActivity(detailIntent);
+        }
+    }
 }

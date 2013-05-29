@@ -8,9 +8,9 @@ public class D2DBOpenHelper extends SQLiteOpenHelper {
 	private static final String DB_NAME = "diablotools";
 	private static final int DB_VERSION = 1;
 
-	private final String key = " INTEGER PRIMARY KEY AUTOINCREMENT, ";
-	private final String text = " TEXT, ";
-	private final String textEnd = " TEXT)";
+	private static final String key = " INTEGER PRIMARY KEY AUTOINCREMENT, ";
+	private static final String text = " TEXT, ";
+	private static final String textEnd = " TEXT)";
 
 	public D2DBOpenHelper(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);

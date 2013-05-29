@@ -7,19 +7,24 @@
     android:orientation="vertical"
     tools:context=".CharacterDetailFragment" >
 
-    <TextView
+    <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/char_detail_name"
             android:layout_gravity="center_horizontal|top"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/char_detail_class"
-            android:layout_gravity="center_horizontal|top"/>
-    <TextView
+    <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/char_detail_level"
             android:layout_gravity="center_horizontal|top"/>
+    <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/char_detail_class"
+            android:layout_gravity="center_horizontal|top"/>
+
+    <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/char_detail_skills" />
 </LinearLayout>
